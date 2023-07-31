@@ -500,15 +500,8 @@ CONFIGURE_OPTIONS+=("--enable-libsvtav1")
 
 
 if command_exists "cargo"; then
-  if [[ ! "$SKIPRAV1E" == "yes" ]]; then
-    if build "rav1e" "0.6.6"; then
-      execute cargo install --version "0.9.20+cargo-0.71" cargo-c
-      download "https://github.com/xiph/rav1e/archive/refs/tags/v0.6.6.tar.gz"
-      execute cargo cinstall --prefix="${WORKSPACE}" --library-type=staticlib --crt-static --release
-      build_done "rav1e" "0.6.6"
-    fi
-    CONFIGURE_OPTIONS+=("--enable-librav1e")
-  fi
+  cargo install --library-type=staticlib --crt-static rav1e
+  CONFIGURE_OPTIONS+=("--enable-librav1e")
 fi
 
 if $NONFREE_AND_GPL; then
